@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Cards | MindHub Brothers Bank</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="./css/cards.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="./images/faviBank.png" type="image/x-icon" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark fixed-top " id="mainNav">
+                <div class="container">
+                    <a id="palabraLogo" class="navbar-brand" href="#page-top">
+                        <img id="imagenLogo" src="./images/logoBanco.png" alt="..." style="width: 30px;" />MindHub
+                        Brothers Bank</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarResponsive">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-3 pt-3">
+                            <li class="nav-item">
+                                <a class="nav-link" href="./accounts.html">Accounts</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">Cards</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./transfers.html">Transfers</a>
+                              </li>
+                            <li class="nav-item">
+                                <a type="submit" class="nav-link" href="./index.html" @click.prevent="logout">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main class="d-flex flex-column align-content-center justify-content-around masthead">
+            <div class="masthead-subheading">Hello {{data.firstName}}!</div>
+            <div class="d-flex justify-content-around flex-column gap-5" style="height: 50em;">
+            
+            
+                
+                <div v-if="tarjetaDebito.length != 0"class="d-flex flex-wrap justify-content-center align-items-center gap-3 col-12">
+                    <h2 class="d-flex">DEBIT CARDS:</h2>
+                    <div id="contCard"class="
+                    justify-content: center" >
+                        <div class=" card" v-for="card of tarjetaDebito">
+                            <div class= "card__front card__part">
+                                <div :class="card.color">
+                                    <img class="card__front-square card__square"
+                                        src="https://i.ibb.co/G9pDnYJ/chip.png">
+                                    <span class="card__front-logo card__logo">{{card.type}}</span>
+
+                                    <p class="card_numer">{{card.number}}</p>
+                                    <div class="card__space-75">
+                                        <span class="card__label">Name</span>
+                                        <p class="card__info">{{card.cardholder}}</p>
+                                    </div>
+                                    <div class="card__space-25">
+                                        <span class="card__label">Expires</span>
+                                        <p class="card__info">{{card.thruDate}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card__back card__part">
+                                <div class="card__black-line"></div>
+                                <div class="card__back-content">
+                                    <div class="card__secret">
+                                        <p class="card__secret--last">{{card.cvv}}</p>
+                                    </div>
+                                    <img class="card__back-square card__square"
+                                        src="https://i.ibb.co/S6JG8px/pattern.png">
+                                    <span class="card__back-logo card__logo">{{card.type}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                </div>                
+                <template >
+                    <div v-else class="card">
+                        <div class="card__part">
+                            <h2>You don,t have debit cards!</h2>
+                        </div>
+                    </div>
+                </template>
+                <div v-if="tarjetaCredito.length != 0"class="d-flex flex-wrap justify-content-center align-items-center gap-3 col-12">
+                    <h2 class="d-flex">CREDIT CARDS:</h2>
+                    <div id="contCard"class="
+                    justify-content: center" >
+                    <div class=" card" v-for="card of tarjetaCredito">
+                        <div class= "card__front card__part">
+                            <div :class="card.color">
+                                <img class="card__front-square card__square"
+                                    src="https://i.ibb.co/G9pDnYJ/chip.png">
+                                <span class="card__front-logo card__logo">{{card.type}}</span>
+
+                                <p class="card_numer">{{card.number}}</p>
+                                <div class="card__space-75">
+                                    <span class="card__label">Name</span>
+                                    <p class="card__info">{{card.cardholder}}</p>
+                                </div>
+                                <div class="card__space-25">
+                                    <span class="card__label">Expires</span>
+                                    <p class="card__info">{{card.thruDate}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card__back card__part">
+                            <div class="card__black-line"></div>
+                            <div class="card__back-content">
+                                <div class="card__secret">
+                                    <p class="card__secret--last">{{card.cvv}}</p>
+                                </div>
+                                <img class="card__back-square card__square"
+                                    src="https://i.ibb.co/S6JG8px/pattern.png">
+                                <span class="card__back-logo card__logo">{{card.type}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>                
+            <template >
+                <div v-else class="card">
+                    <div class="card__part">
+                        <h2>You don,t have credit cards!</h2>
+                    </div>
+                </div>
+            </template>
+        
+                <div class="d-flex justify-content-center">
+                    <template v-if="tarjetas.length < 6">
+                        <a type="button" class=" button-perspective mt-5" href="./create-cards.html">CREATE
+                            NEW
+                            CARD?</a>
+                    </template>
+                    <template v-else>
+                        <h4></h4>
+                    </template>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+
+
+
+
+
+    <div class="footer-dark">
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>Services</h3>
+                        <ul>
+                            <li><a href="#">Web design</a></li>
+                            <li><a href="#">Development</a></li>
+                            <li><a href="#">Hosting</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>About</h3>
+                        <ul>
+                            <li><a href="#">Company</a></li>
+                            <li><a href="#">Team</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 item text">
+                        <h3>MindHub Brothers Bank</h3>
+                        <p>
+                            Praesent sed lobortis mi. Suspendisse vel placerat ligula.
+                            Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis
+                            tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel
+                            in justo.
+                        </p>
+                    </div>
+                    <div class="col item social">
+                        <a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i
+                                class="icon ion-social-twitter"></i></a><a href="#"><i
+                                class="icon ion-social-snapchat"></i></a><a href="#"><i
+                                class="icon ion-social-instagram"></i></a>
+                    </div>
+                </div>
+                <p class="copyright">MindHub Brothers Bank © 2023</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./js/cards.js"></script>
+</body>
+
+</html>
