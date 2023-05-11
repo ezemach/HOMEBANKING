@@ -54,11 +54,11 @@ public class CardController {
 
 
         if(type.equals("CREDIT") && creditCant < 3){
-            Card newCard = new Card (CardType.CREDIT, CardColor.valueOf(color),client.getFirstName() + client.getLastName(), LocalDate.now(), LocalDate.now().plusYears(5), randomNumber(), Integer.parseInt(randomCvv()));
+            Card newCard = new Card (CardType.CREDIT, CardColor.valueOf(color),client.getFirstName() +" "+ client.getLastName(), LocalDate.now(), LocalDate.now().plusYears(5), randomNumber(), Integer.parseInt(randomCvv()));
             client.addCard(newCard);
             cardRepository.save(newCard);}
         else if (type.equals("DEBIT") && creditCant < 3) {
-            Card newCard = new Card (CardType.DEBIT, CardColor.valueOf(color),client.getFirstName() + client.getLastName(), LocalDate.now(), LocalDate.now().plusYears(5), randomNumber(), Integer.parseInt(randomCvv()));
+            Card newCard = new Card (CardType.DEBIT, CardColor.valueOf(color),client.getFirstName() +" "+ client.getLastName(), LocalDate.now(), LocalDate.now().plusYears(5), randomNumber(), Integer.parseInt(randomCvv()));
             client.addCard(newCard);
             cardRepository.save(newCard);
         }
