@@ -28,6 +28,7 @@ public class Card {
 
     private int cvv;
 
+    private boolean active;
     private LocalDate fromDate;
     private LocalDate thruDate;
 
@@ -35,7 +36,7 @@ public class Card {
 
     public Card() {}
 
-    public Card(CardType type, CardColor color,String cardholder, LocalDate fromDate, LocalDate thruDate, String number, int cvv) {
+    public Card(CardType type, CardColor color,String cardholder, LocalDate fromDate, LocalDate thruDate, String number, int cvv, boolean active) {
         this.type = type;
         this.color = color;
         this.cardholder = cardholder;
@@ -43,6 +44,7 @@ public class Card {
         this.thruDate = thruDate;
         this.number = number;
         this.cvv = cvv;
+        this.active = active;
 
     }
 
@@ -118,6 +120,13 @@ public class Card {
 
     public void setFromDate(LocalDate fromDate) {
         this.fromDate = fromDate;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
 

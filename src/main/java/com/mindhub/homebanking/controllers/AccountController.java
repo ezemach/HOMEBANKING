@@ -2,18 +2,16 @@ package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.dtos.AccountDTO;
 import com.mindhub.homebanking.dtos.ClientDTO;
-import com.mindhub.homebanking.models.Account;
-import com.mindhub.homebanking.models.Client;
+import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.service.AccountService;
+import com.mindhub.homebanking.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,44 +21,69 @@ import java.util.stream.Collectors;
 public class AccountController {
 
     @Autowired
-    private AccountRepository repoAccount;
+    private AccountService accountService;
+
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
 
 
 
     @RequestMapping("/api/accounts")
     public List<AccountDTO> getAccount() {
-
-        return repoAccount.findAll()
-                .stream()
-                .map(account -> new AccountDTO(account))
-                .collect(Collectors.toList());
+        return accountService.getAccount();
     }
     @RequestMapping("/api/accounts/{id}")
-
     public AccountDTO getAccount(@PathVariable Long id){
-        return repoAccount.findById(id).map(account -> new AccountDTO(account)).orElse(null);
+        return accountService.getAccount(id);
     }
 
     @RequestMapping(path = "/api/clients/current/accounts", method = RequestMethod.POST)
-    public ResponseEntity<Object> createNewAccount(Authentication authentication) {
-        Client client = clientRepository.findByEmail(authentication.getName());
-        if(client.getAccounts().size() < 3){
+    public ResponseEntity<Object> createNewAccount(Authentication authentication,
+                                                     @RequestParam String type) {
+        Client client = clientService.findByEmail(authentication.getName());
+
+        List<Account> activeAccounts = client.getAccounts().stream()
+                .filter(account -> account.isActive() &&
+                        account.getType() == AccountType.valueOf(type))
+                .collect(Collectors.toList());
+
+
+             if (activeAccounts.size() < 3){
             String accountNumber;
             do {
                 int randomNumber = (int) (Math.random() * 100000000);
                 accountNumber = "VIN" + String.format("%08d", randomNumber);
-            } while (repoAccount.findByNumber(accountNumber) != null);
-            Account newAccount = new Account(accountNumber, LocalDateTime.now(),0);
+            } while (accountService.findByNumber(accountNumber) != null);
+            Account newAccount = new Account(accountNumber, LocalDateTime.now(),0, true, AccountType.valueOf(type));
             client.addAccount(newAccount);
-            repoAccount.save(newAccount);
+            accountService.saveAccount(newAccount);
         } else{
             return new ResponseEntity<>("you can`t have more than 3 accounts", HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
 
     }
+
+    @PutMapping("/api/accounts/{id}")
+    public ResponseEntity<Object> deleteAccount(Authentication authentication, @PathVariable Long id){
+          Account account = accountService.findById(id);
+          Client client = clientService.findByEmail(authentication.getName());
+        if (account == null){
+            return new ResponseEntity<>("Account is not found", HttpStatus.NOT_FOUND);
+        }
+        if (client.getAccounts().stream().noneMatch(account1 -> account1.getId() == id)){
+            return new ResponseEntity<>("Account is not yours", HttpStatus.FORBIDDEN);
+        }
+        if (account.getBalance() != 0){
+            return new ResponseEntity<>("you can not delete, you have money to transfer or a debt to pay", HttpStatus.FORBIDDEN);
+        }
+
+        account.setActive(false);
+        accountService.saveAccount(account);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 
 
 

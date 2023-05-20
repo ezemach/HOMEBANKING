@@ -1,28 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
     <title>Home Banking || Manager</title>
-    <link rel="stylesheet" href="./css/style.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
-      crossorigin="anonymous"
-    />
+    <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="./css/style.css" rel="stylesheet" />
+  <link rel="shortcut icon" href="./images/faviBank.png" type="image/x-icon" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
 
   <body>
-  <div id="app">
-    <header class="d-flex justify-content-center align-items-center">
-      <h1>Home Banking Manager</h1>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark fixed-top " id="mainNav">
+        <div class="container">
+          <a id="palabraLogo" class="navbar-brand" href="#page-top">
+            <img id="imagenLogo" src="./images/logoBanco.png" alt="..." style="width: 30px;" />MindHub Brothers Bank</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-3 pt-3">
+              <li class="nav-item">
+                <a class="nav-link active" href="#">Home Manager</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="./accounts.html">Accounts</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="./cards.html">Cards</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="./transfers.html">Transfers</a>
+              </li>
+              <li class="nav-item">
+                <a type="submit" class="nav-link" href="./index.html" @click.prevent="logout">Logout</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
     </header>
 
-    <main>
-      <div class="d-flex justify-content-around pt-4">
-        <div class="col-6">
+  <div id="app">
+    <main class="masthead">
+      <div class="masthead-subheading">
+        Home Banking Manager
+      </div>
+      <div class="d-flex justify-content-around align-items-center pt-4">
+        <div class="col-6 align-items-center">
           <form
             v-on:submit="addClient"
             class="d-flex flex-column formStyle mb-2 p-2 align-items-center"
@@ -59,17 +92,17 @@
                 required
               />
 
-              <div id="emailHelp" class="form-text">
+              <div id="emailHelp" class="form-text text-white">
                 We'll never share your email with anyone else.
               </div>
             </div>
-            <button type="submit" class="btn btn-success col-3">
+            <button type="submit" class="btn btn-success col-3 text-white">
               Add Client
             </button>
           </form>
           <div class="tableContent p-2">
             <h2>Client List</h2>
-            <table class="table">
+            <table class="table text-white">
               <thead>
                 <tr>
                   <th scope="col">First Name</th>
@@ -86,22 +119,145 @@
               </tbody>
             </table>
           </div>
+          <form
+          
+          class="d-flex flex-column formStyle mb-2 mt-5 p-2 align-items-center action=# signin-form"
+          @submit.prevent="createLoan"
+        >
+          
+          <h2>CREATE A NEW LOAN</h2>
+          <div class="mb-2" style="width: 20rem">
+            <label for="loanName" class="form-label">Loan Name:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="loanName"
+              placeholder="Loan Name"
+              v-model="loanName"
+              required
+            />
+          </div>
+          <div class="mb-2" style="width: 20rem">
+            <label for="loanMaxAmount" class="form-label">Max Amount:</label>
+            <input
+              type="number"
+              class="form-control"
+              id="loanMaxAmount"
+              v-model="loanMaxAmount"
+              placeholder="Loan Max Amount"
+              required
+            />
+          </div>
+          <div class="mb-2" style="width: 20rem">
+            <label for="loanPayments" class="form-label">Payments:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="loanPayments"
+              aria-describedby=""
+              v-model="loanPayments"
+              placeholder="Payments"
+              required
+            />
+            <div class="mb-2" style="width: 20rem">
+              <label for="loanInterests" class="">Interests:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="loanInterests"
+                aria-describedby=""
+                v-model="loanInterests"
+                placeholder="Interests"
+                required
+              />
+            
+          </div>
+          <button type="submit" class="container-fluid button-perspective mt-4 mb-4">NEW LOAN</button>
+        </form>
+          
+          
+            <!-- <div class="form-group ">
+                <input type="text" class="form-control"  style="width: 30rem" required>
+            </div>
+            <div class="form-group ">
+                <input  type="text" class="form-control" placeholder="Last Name"
+                    v-model="lastName" required>
+            </div>
+            <div class="form-group ">
+                <input type="email" class="form-control" placeholder="Username" v-model="email"
+                    required>
+            </div>
+            <div class="form-group ">
+                <input id="password-field" type="password" class="form-control"
+                    placeholder="Password" v-model="password" required>
+                <span toggle="#password-field"
+                    class="fa fa-fw fa-eye field-icon toggle-password"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="container-fluid button-perspective mt-4 mb-4"
+                    @click.prevent="newAccount" onclick="window.location.replace('./index.html')">Sign up</button>
+                    
+            </div> -->
+
+    
+
         </div>
-        <div class="col-5 p-2 jsonContent">
+        
+        <!-- <div class="col-5 p-2 jsonContent">
           <h2>Client REST response</h2>
-          <pre class="p-4">{{data}}</pre>
-        </div>
+          <pre class="p-4 text-white">{{data}}</pre>
+        </div> -->
       </div>
     </main>
-    <footer></footer>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+    <div class="footer-dark">
+      <footer>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-6 col-md-3 item">
+              <h3>Services</h3>
+              <ul>
+                <li><a href="#">Web design</a></li>
+                <li><a href="#">Development</a></li>
+                <li><a href="#">Hosting</a></li>
+              </ul>
+            </div>
+            <div class="col-sm-6 col-md-3 item">
+              <h3>About</h3>
+              <ul>
+                <li><a href="#">Company</a></li>
+                <li><a href="#">Team</a></li>
+              </ul>
+            </div>
+            <div class="col-md-6 item text">
+              <h3>MindHub Brothers Bank</h3>
+              <p>
+                Praesent sed lobortis mi. Suspendisse vel placerat ligula.
+                Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis
+                tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel
+                in justo.
+              </p>
+            </div>
+            <div class="col item social">
+              <a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i
+                  class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a
+                href="#"><i class="icon ion-social-instagram"></i></a>
+            </div>
+          </div>
+          <p class="copyright">MindHub Brothers Bank © 2023</p>
+        </div>
+      </footer>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
-      crossorigin="anonymous"
-    ></script>
+      crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>  
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script src="./js/manager.js"></script>
-  </div>
   </body>
 </html>

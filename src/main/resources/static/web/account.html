@@ -69,6 +69,7 @@
                   <th scope="col">Amount</th>
                   <th scope="col">Description</th>
                   <th scope="col">Type</th>
+                  <th scope="col">Balance</th>
                 </tr>
               </thead>
               <template v-for="datos of transacciones">
@@ -79,6 +80,7 @@
                   <td>$ {{datos.amount.toFixed(2)}}</td>
                   <td>{{datos.description}}</td>
                   <td>{{datos.type}}</td>
+                  <td>{{datos.balance.toFixed(2)}}</td>
                 </tr>
               </template>
             </table>

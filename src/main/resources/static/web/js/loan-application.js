@@ -5,15 +5,17 @@ createApp({
             data:[],
             loans:"",
             idLoan:"",
+            id_Loan:"",
             amount:"",
             payments:"",
-            personalPayments:"",
-            hipotecarioPayments:"",
-            automotrizPayments:"",
+            // personalPayments:"",
+            // hipotecarioPayments:"",
+            // automotrizPayments:"",
             numberAccount:"",
-            filtrarId2:"",
+            // filtrarId2:"",
             accounts:"",
             selectedLoan:"",
+            interests:""
         }
     },
     created() {
@@ -26,7 +28,9 @@ createApp({
           .then(response => {
               this.data = response.data
               console.log(this.data)
-              this.personalPayments = response.data[0].payments
+              this.hipotecarioPayments = response.data[0].payments
+              this.personalPayments = response.data[1].payments
+              this.automotrizPayments = response.data[2].payments
               console.log(this.payments)
               // this.filtrarId2 = this.data.filter(loan => {
               //      return this.typeLoan.includes(loan.name) 
@@ -43,22 +47,30 @@ createApp({
           })
           .catch(err => console.log(err))
         },
-
-        perPay(){ 
-        this.personalPayments = true,
-        this.hipotecarioPayments= false,
-        this.automotrizPayments= false
-      },
-        autoPay(){
-          this.personalPayments = false,
-          this.hipotecarioPayments= false,
-          this.automotrizPayments= true
-      },
-        hipPay(){
-        this.personalPayments = false,
-        this.hipotecarioPayments= true,
-        this.automotrizPayments= false
+        getSelectedLoanPayments() {
+          if (this.idLoan !== "") {
+            const selectedLoanIndex = parseInt(this.idLoan);
+            return this.data[selectedLoanIndex].payments;
+          }
+          return [];
         },
+       
+
+      //   Personal(){ 
+      //   this.personalPayments = true,
+      //   this.hipotecarioPayments= false,
+      //   this.automotrizPayments= false
+      // },
+      //   Automotriz(){
+      //     this.personalPayments = false,
+      //     this.hipotecarioPayments= false,
+      //     this.automotrizPayments= true
+      // },
+      //   Hipotecario(){
+      //   this.personalPayments = false,
+      //   this.hipotecarioPayments= true,
+      //   this.automotrizPayments= false
+      //   },
         // getAccountNameById(id) {
         //   const account = this.accounts.find(acc => acc.id === id);
         //   return account ? account.name : '';
@@ -114,9 +126,9 @@ createApp({
           Swal.fire({
               title: 'Do You Confirm Your Loan?',
               html: `
-                  <p>Loan selected: ${this.data[0].name}</p>
+                  <p>Loan selected: ${this.data[this.idLoan - 1].name}</p>
                   <p>Payments: ${this.payments}</p>
-                  <p>Amount to pay: ${this.amount * 1.20}</p>
+                  <p>Amount to pay: ${this.amount * this.data[this.idLoan - 1].interests}</p>
                   <p>Account to transver: ${this.numberAccount}</p>
               `,
               showCancelButton: true,

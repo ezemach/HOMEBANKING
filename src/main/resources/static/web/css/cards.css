@@ -423,6 +423,10 @@ main.masthead .masthead-heading {
                 
 }
 
+.divTemplate{
+    height: 5em;
+}
+
 
 /*PERPECTIVE */
 .button-perspective {
@@ -477,4 +481,64 @@ main.masthead .masthead-heading {
       font-size: 1rem;
     }
   }
+
+  .button-perspective2 {
+    background-color: #282d32;
+    border: 1 solid;
+    border-color: white;
+    box-sizing: border-box;
+    color: white;
+    font-family: ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 1rem;
+    font-weight: 700;
+    justify-content: center;
+    line-height: 1.75rem;
+    padding: .75rem 1.65rem;
+    position: relative;
+    text-align: center;
+    text-decoration: none white solid;
+    text-decoration-thickness: auto;
+    width: 250%;
+    max-width: 220px;
+    position: relative;
+    cursor: pointer;
+    transform: rotate(-2deg);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  
+  .button-perspective2:focus {
+    outline: 0;
+  }
+  
+  .button-perspective2:after {
+    content: '';
+    position: absolute;
+    border: 1px solid #000000;
+    bottom: 4px;
+    left: 4px;
+    width: calc(100% - 1px);
+    height: calc(100% - 1px);
+  }
+  
+  .button-perspective2:hover:after {
+    bottom: 2px;
+    left: 2px;
+  }
+  
+  @media (min-width: 768px) {
+    .button-perspective2 {
+      padding: .75rem 2rem;
+      font-size: 1rem;
+    }
+  }
+
+  #subMain{
+    width: 100%;
+  }
+
+  .card__info.expired {
+    color: rgb(156, 11, 11) !important;
+}
   

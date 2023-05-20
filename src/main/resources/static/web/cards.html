@@ -37,7 +37,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="./transfers.html">Transfers</a>
-                              </li>
+                            </li>
                             <li class="nav-item">
                                 <a type="submit" class="nav-link" href="./index.html" @click.prevent="logout">Logout</a>
                             </li>
@@ -47,113 +47,146 @@
             </nav>
         </header>
 
-        <main class="d-flex flex-column align-content-center justify-content-around masthead">
+        <main class="align-content-center justify-content-around masthead">
             <div class="masthead-subheading">Hello {{data.firstName}}!</div>
-            <div class="d-flex justify-content-around flex-column gap-5" style="height: 50em;">
-            
-            
-                
-                <div v-if="tarjetaDebito.length != 0"class="d-flex flex-wrap justify-content-center align-items-center gap-3 col-12">
-                    <h2 class="d-flex">DEBIT CARDS:</h2>
-                    <div id="contCard"class="
-                    justify-content: center" >
-                        <div class=" card" v-for="card of tarjetaDebito">
-                            <div class= "card__front card__part">
-                                <div :class="card.color">
-                                    <img class="card__front-square card__square"
-                                        src="https://i.ibb.co/G9pDnYJ/chip.png">
-                                    <span class="card__front-logo card__logo">{{card.type}}</span>
+            <div class="container-fluid ">
+                <div class="d-flex justify-content-around align-items-center flex-column gap-5" id="subMain">
 
-                                    <p class="card_numer">{{card.number}}</p>
-                                    <div class="card__space-75">
-                                        <span class="card__label">Name</span>
-                                        <p class="card__info">{{card.cardholder}}</p>
-                                    </div>
-                                    <div class="card__space-25">
-                                        <span class="card__label">Expires</span>
-                                        <p class="card__info">{{card.thruDate}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card__back card__part">
-                                <div class="card__black-line"></div>
-                                <div class="card__back-content">
-                                    <div class="card__secret">
-                                        <p class="card__secret--last">{{card.cvv}}</p>
-                                    </div>
-                                    <img class="card__back-square card__square"
-                                        src="https://i.ibb.co/S6JG8px/pattern.png">
-                                    <span class="card__back-logo card__logo">{{card.type}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                </div>                
-                <template >
-                    <div v-else class="card">
-                        <div class="card__part">
-                            <h2>You don,t have debit cards!</h2>
-                        </div>
-                    </div>
-                </template>
-                <div v-if="tarjetaCredito.length != 0"class="d-flex flex-wrap justify-content-center align-items-center gap-3 col-12">
-                    <h2 class="d-flex">CREDIT CARDS:</h2>
-                    <div id="contCard"class="
-                    justify-content: center" >
-                    <div class=" card" v-for="card of tarjetaCredito">
-                        <div class= "card__front card__part">
-                            <div :class="card.color">
-                                <img class="card__front-square card__square"
-                                    src="https://i.ibb.co/G9pDnYJ/chip.png">
-                                <span class="card__front-logo card__logo">{{card.type}}</span>
+                    <div class="d-flex ">
+                        <div class="d-flex flex-column align-items-center gap-4">
 
-                                <p class="card_numer">{{card.number}}</p>
-                                <div class="card__space-75">
-                                    <span class="card__label">Name</span>
-                                    <p class="card__info">{{card.cardholder}}</p>
+                            <h2 class="d-flex align-content-center">DEBIT CARDS:</h2>
+                            <template v-if="tarjetaDebito.length != 0" v-for="card of tarjetaDebito">
+
+                                <div class="d-flex flex-wrap justify-content-around align-items-center  col-12 gap-3 mb-5">
+
+                                    <div id="contCard" class=" d-flex
+                    justify-content: center">
+                                        <div class="divTemplate">
+
+                                            <div class=" card">
+                                                <div class="card__front card__part">
+                                                    <div :class="card.color">
+                                                        <img class="card__front-square card__square"
+                                                            src="https://i.ibb.co/G9pDnYJ/chip.png">
+                                                        <span class="card__front-logo card__logo">{{card.type}}</span>
+
+                                                        <p class="card_numer">{{card.number}}</p>
+                                                        <div class="card__space-75">
+                                                            <span class="card__label">Name</span>
+                                                            <p class="card__info">{{card.cardholder}}</p>
+                                                        </div>
+                                                        <div class="card__space-25">
+                                                            <span class="card__label">Expires</span>
+                                                            <!-- <div :class="card.thruDate"> -->
+                                                            <p class="card__info"
+                                                                :class="{ 'expired': isCardExpired(card.thruDate)}">
+                                                                {{card.thruDate}}</p>
+                                                            <!-- </div> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card__back card__part">
+                                                    <div class="card__black-line"></div>
+                                                    <div class="card__back-content">
+                                                        <div class="card__secret">
+                                                            <p class="card__secret--last">{{card.cvv}}</p>
+                                                        </div>
+                                                        <img class="card__back-square card__square"
+                                                            src="https://i.ibb.co/S6JG8px/pattern.png">
+                                                        <span class="card__back-logo card__logo">{{card.type}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="card__space-25">
-                                    <span class="card__label">Expires</span>
-                                    <p class="card__info">{{card.thruDate}}</p>
+                                <button type="submit" class="d-flex button-perspective2 mt-5"
+                                    @click=" deleteCard(card.id)">DELETE
+                                    CARD?</button>
+
+                            </template>
+
+                            <div v-else class=" d-flex card mb-5">
+                                <div class="card__part mb-5">
+                                    <h2>You don,t have debit cards!</h2>
                                 </div>
                             </div>
+
                         </div>
-                        <div class="card__back card__part">
-                            <div class="card__black-line"></div>
-                            <div class="card__back-content">
-                                <div class="card__secret">
-                                    <p class="card__secret--last">{{card.cvv}}</p>
+
+
+                        <div class="d-flex flex-column align-items-center gap-4">
+                            <h2 class="d-flex align-content-center">CREDIT CARDS:</h2>
+                            <template v-if="tarjetaCredito.length != 0" v-for="card of tarjetaCredito">
+                                <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 col-12 mb-5">
+
+                                    <div id="contCard" class=" d-flex justify-content: center">
+                                        <div class="divTemplate">
+                                            <div class=" card">
+                                                <div class="card__front card__part">
+                                                    <div :class="card.color">
+                                                        <img class="card__front-square card__square"
+                                                            src="https://i.ibb.co/G9pDnYJ/chip.png">
+                                                        <span class="card__front-logo card__logo">{{card.type}}</span>
+
+                                                        <p class="card_numer">{{card.number}}</p>
+                                                        <div class="card__space-75">
+                                                            <span class="card__label">Name</span>
+                                                            <p class="card__info">{{card.cardholder}}</p>
+                                                        </div>
+                                                        <div class="card__space-25">
+                                                            <span class="card__label">Expires</span>
+                                                            <p class="card__info">{{card.thruDate}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card__back card__part">
+                                                    <div class="card__black-line"></div>
+                                                    <div class="card__back-content">
+                                                        <div class="card__secret">
+                                                            <p class="card__secret--last">{{card.cvv}}</p>
+                                                        </div>
+                                                        <img class="card__back-square card__square"
+                                                            src="https://i.ibb.co/S6JG8px/pattern.png">
+                                                        <span class="card__back-logo card__logo">{{card.type}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <img class="card__back-square card__square"
-                                    src="https://i.ibb.co/S6JG8px/pattern.png">
-                                <span class="card__back-logo card__logo">{{card.type}}</span>
+                                <button type="submit" class="d-flex button-perspective2 mt-5"
+                                    @click="deleteCard(card.id)">DELETE
+                                    CARD?</button>
+                            </template>
+
+                            <div v-else class="d-flex card mb-5 ms-5 ">
+                                <div class="card__part mb-5 ">
+                                    <h2>You don,t have credit cards!</h2>
+                                </div>
                             </div>
+
+
                         </div>
+
                     </div>
-                </div>
-            </div>                
-            <template >
-                <div v-else class="card">
-                    <div class="card__part">
-                        <h2>You don,t have credit cards!</h2>
+
+                    <div class="d-flex justify-content-around mt-5" >
+                        <template v-if="cardActive.length < 6">
+                            <a type="button" class="button-perspective mt-5" href="./create-cards.html">CREATE
+                                NEW
+                                CARD?</a>
+                        </template>
+                        <template v-else>
+                            <h4></h4>
+                        </template>
                     </div>
-                </div>
-            </template>
-        
-                <div class="d-flex justify-content-center">
-                    <template v-if="tarjetas.length < 6">
-                        <a type="button" class=" button-perspective mt-5" href="./create-cards.html">CREATE
-                            NEW
-                            CARD?</a>
-                    </template>
-                    <template v-else>
-                        <h4></h4>
-                    </template>
                 </div>
             </div>
         </main>
     </div>
-    
+
 
 
 
@@ -206,6 +239,7 @@
         crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./js/cards.js"></script>
 </body>
 

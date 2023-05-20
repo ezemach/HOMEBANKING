@@ -7,6 +7,9 @@ import com.mindhub.homebanking.models.TransactionType;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.service.AccountService;
+import com.mindhub.homebanking.service.ClientService;
+import com.mindhub.homebanking.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
@@ -23,11 +25,11 @@ import java.time.LocalDateTime;
 public class TransactionController {
 
     @Autowired
-    private TransactionRepository transactionRepository;
+    private TransactionService transactionService;
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountService accountService;
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
 
     @Transactional
     @RequestMapping(path = "/api/clients/current/transactions", method = RequestMethod.POST)
@@ -37,9 +39,11 @@ public class TransactionController {
                                                  @RequestParam String numberOrigin,
                                                  @RequestParam String numberDestiny) {
 
-        Client client = clientRepository.findByEmail(authentication.getName());
-        Account accountOrigin = accountRepository.findByNumber(numberOrigin.toUpperCase());
-        Account accountDestiny = accountRepository.findByNumber(numberDestiny.toUpperCase());
+        Client client = clientService.findByEmail(authentication.getName());
+        Account accountOrigin = accountService.findByNumber(numberOrigin.toUpperCase());
+        Account accountDestiny = accountService.findByNumber(numberDestiny.toUpperCase());
+        Account balance = accountService.findByNumber(numberOrigin.toUpperCase());
+        Account balance2 = accountService.findByNumber(numberOrigin.toUpperCase());
 
         if (description.isBlank() || numberOrigin.isEmpty() || numberDestiny.isEmpty() || amount < 1.0) {
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
@@ -63,13 +67,17 @@ public class TransactionController {
         accountOrigin.setBalance(accountOrigin.getBalance() - amount);
         accountDestiny.setBalance(accountDestiny.getBalance() + amount);
 
+//        balance.setBalance(balance.getBalance() - amount);
+//        balance2.setBalance(balance.getBalance() + amount);
 
-        Transaction transactionDebit = new Transaction(TransactionType.DEBIT, amount, description + accountOrigin.getNumber(), LocalDateTime.now());
+
+        Transaction transactionDebit = new Transaction(TransactionType.DEBIT, amount, description + " " + accountOrigin.getNumber(), LocalDateTime.now(), accountOrigin.getBalance()) ;
         accountOrigin.addTransaction(transactionDebit);
-        Transaction transactionCredit = new Transaction(TransactionType.CREDIT, amount, description + accountDestiny.getNumber(), LocalDateTime.now());
+
+        Transaction transactionCredit = new Transaction(TransactionType.CREDIT, amount, description + " " + accountDestiny.getNumber(), LocalDateTime.now(),accountDestiny.getBalance());
         accountDestiny.addTransaction(transactionCredit);
-        transactionRepository.save(transactionDebit);
-        transactionRepository.save(transactionCredit);
+        transactionService.saveTransaction(transactionDebit);
+        transactionService.saveTransaction(transactionCredit);
 
 
         return new ResponseEntity<>(HttpStatus.CREATED);

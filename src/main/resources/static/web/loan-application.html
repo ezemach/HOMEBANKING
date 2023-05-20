@@ -66,35 +66,34 @@
 
                                     <label class="fs-4 gap-1"> select a Loan you want:</label>
                                     <div class="d-flex gap-3 mb-4 mt-3 fs-5 justify-content-center">
-                                        <!-- <template v-for="loan of data"> -->
+                                        <template v-for="loan of data">
 
                                             <input
-                                                 @click="hipPay"
+                                                 
                                                  type="radio"
                                                  class="fs-4" 
-                                                 name="idLoan1"
+                                                 name="idLoan"
                                                  v-model="idLoan" 
-                                                 :value="data[0].id">{{data[0].name}}</input>
+                                                 :value="loan.id">{{loan.name}}
 
-                                            <input 
-                                                @click="perPay"
-                                                type="radio"
-                                                name="idLoan1"
-                                                class="fs-4" 
-                                                v-model="idLoan" 
-                                                :value="data[1].id">{{data[1].name}}</input>
-
-
-                                            <input 
-                                                name="idLoan1"
-                                                @click="autoPay"
-                                                type="radio"
-                                                class="fs-4" 
-                                                v-model="idLoan" 
-                                                :value="data[2].id">{{data[2].name}}</input>
+                                        
                                                 
-                                        <!-- </template> -->
+                                        </template>
                                     </div>
+
+                                    <!-- <div v-if="idLoan !== ''" class="mb-2">
+                                        <label class="fs-4 gap-1" for="payments">Select payments to pay:</label>
+                                        <select class="select-css" name="payments" id="payments" v-model="payments"
+                                            required>
+                                            <template >
+                                                <optgroup>
+                                                    <option v-for="loan in data" :key="loan.id_Loan" v-if="loan === idLoan">
+                                                        {{ loan.payments }} cuotas
+                                                      </option>
+                                                </optgroup>
+                                            </template>
+                                        </select>
+                                    </div> -->
                                   
 
                                     <div v-if="personalPayments" class="mb-2">
@@ -102,7 +101,7 @@
                                         <select class="select-css" name="payments" id="payments" v-model="payments"
                                             required>
                                             <template v-for="loan of data">
-                                                <optgroup v-if="loan.name ==='Personal'" :label="loan.name">
+                                                <optgroup v-if="loan.name" :label="loan.name">
                                                     <option v-for="payment in loan.payments" :key="payments"
                                                         :value="payment">
                                                         {{ payment}} cuotas
@@ -112,7 +111,7 @@
                                         </select>
                                     </div>
 
-                                    <div v-if="hipotecarioPayments" class="mb-2">
+                                    <div v-else-if="hipotecarioPayments" class="mb-2">
                                         <label class="fs-4 gap-1" for="payments">Select payments to pay:</label>
                                         <select class="select-css" name="payments" id="payments" v-model="payments"
                                             required>
@@ -127,12 +126,12 @@
                                         </select>
                                     </div>
 
-                                    <div v-if="automotrizPayments" class="mb-2">
+                                    <div v-else="automotrizPayments" class="mb-2">
                                         <label class="fs-4 gap-1" for="payments">Select payments to pay:</label>
                                         <select class="select-css" name="payments" id="payments" v-model="payments"
                                             required>
                                             <template v-for="loan of data">
-                                                <optgroup v-if="loan.name ==='Automotriz'" :label="loan.name">
+                                                <optgroup v-else="loan.name ==='Automotriz'" :label="loan.name">
                                                     <option v-for="payment in loan.payments" :key="payments"
                                                         :value="payment">
                                                         {{ payment}} cuotas
@@ -141,6 +140,7 @@
                                             </template>
                                         </select>
                                     </div>
+                                    <div v-else></div>
 
                                     <div class="form-group">
                                         <label class="fs-4 gap-1" for=""> amount:</label>
@@ -165,7 +165,7 @@
                                             </template>
                                         </select>
                                     </div> -->
-                                    <div v-else></div>
+                                    <!-- <div v-else></div> -->
 
                                     <label class="fs-4 gap-1" for="numberAccount"> select your account to
                                         transfer:</label>

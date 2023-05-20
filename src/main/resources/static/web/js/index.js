@@ -18,7 +18,7 @@ createApp({
                         'success'
                       )
                     if (this.email == "admin@admin.com") {
-                        window.location.replace('./web/manager.html')
+                        window.location.replace('./manager.html')
                     } else {
                         window.location.replace('./accounts.html')
                     }
