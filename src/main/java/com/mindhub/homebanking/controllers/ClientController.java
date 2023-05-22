@@ -36,6 +36,7 @@ public class ClientController {
     public List<ClientDTO> getClients() {
         return clientService.getClients();
     }
+
     @RequestMapping("/api/clients/{id}")
 
     public ClientDTO getClients(@PathVariable long id){

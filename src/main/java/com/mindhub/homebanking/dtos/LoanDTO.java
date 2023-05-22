@@ -23,19 +23,14 @@ public class LoanDTO {
     public String getName() {
         return name;
     }
-
     public double getMaxAmount() {
         return maxAmount;
     }
-
     public List<Integer> getPayments() {
         return payments;
     }
     public long getId() {
         return id;
     }
-
-    public double getInterests() {
-        return interests;
-    }
+    public double getInterests() { return interests;}
 }

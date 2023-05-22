@@ -34,8 +34,6 @@ public class LoanController {
     private ClientLoanService clientLoanService;
 
 
-
-
     @Transactional
     @RequestMapping(path = "/api/loans", method = RequestMethod.POST)
     public ResponseEntity<Object> addLoan(Authentication authentication,
@@ -80,15 +78,15 @@ public class LoanController {
         // Calcular interes del monto solicitado
         double interes = monto * interesSeleccionado;
 
-        // Actualizar el monto de la solicitud de préstamo sumando el 20%
-        double montoConInteres = monto + interes;
+        // Actualizar el monto de la solicitud de préstamo
+        double montoConInteres = interes + monto;
 
         // Crear una instancia de Loan con los datos actualizados
         ClientLoan SolicitudClientLoan = new ClientLoan ( montoConInteres, loanApplicationDTO.getPayments(), loanApplicationDTO.getNumber());
         clientLoanService.saveClientLoan(SolicitudClientLoan);
 
         Transaction creditTransaction = new Transaction(TransactionType.CREDIT, monto, loan.getName() + " loan approved", LocalDateTime.now(),account.getBalance() + monto);
-        transactionService.save(creditTransaction);
+        transactionService.saveTransaction(creditTransaction);
 
         account.setBalance(account.getBalance() + loanApplicationDTO.getAmount());
         account.addTransaction(creditTransaction);
@@ -142,9 +140,57 @@ public class LoanController {
 
         return new ResponseEntity<>(HttpStatus.CREATED);
 
-
     }
 
+    @PostMapping("/api/loans/payments")
+    public ResponseEntity<Object> makePayment(
+            Authentication authentication,
+            @RequestBody LoanPaymentDTO loanPaymentDTO
+    ) {
+        Client client = clientService.findByEmail(authentication.getName());
+        Account account = accountService.findByNumber(loanPaymentDTO.getNumber().toUpperCase());
+        ClientLoan clientLoan = clientLoanService.findById(loanPaymentDTO.getId());
+
+        // Obtener el préstamo por su ID
+
+        if (clientLoan == null) {
+            return new ResponseEntity<>("Préstamo no encontrado", HttpStatus.NOT_FOUND);
+        }
+
+        // Obtener la cuenta por su ID
+
+        if (account == null) {
+            return new ResponseEntity<>("Cuenta no encontrada", HttpStatus.NOT_FOUND);
+        }
+
+
+        // monto de la cuota a pagar
+        double montoCuota = clientLoan.getAmount() / clientLoan.getPayments() ;
+        // Restar del monto 1 cuota
+        double newAmount = clientLoan.getAmount() - montoCuota;
+        // Restar 1 al número de cuotas pendientes
+        int newPayments = clientLoan.getPayments() - 1;
+
+
+
+        //Nueva instancia de Transaction
+        Transaction paymentTransaction = new Transaction(TransactionType.DEBIT,montoCuota,"Payment " + newPayments +"/"+clientLoan.getPayments() +" "+ clientLoan.getName()+" Loan",LocalDateTime.now(),account.getBalance() - montoCuota);
+        transactionService.saveTransaction(paymentTransaction);
+
+        // Actualiza el préstamo con los nuevos valores
+        clientLoan.setAmount(clientLoan.getAmount() - montoCuota);
+        clientLoan.setPayments(clientLoan.getPayments() - 1);
+        clientLoanService.saveClientLoan(clientLoan);
+
+        account.setBalance(account.getBalance() - montoCuota);
+        account.addTransaction(paymentTransaction);
+        accountService.saveAccount(account);
+
+        client.addClientLoan(clientLoan);
+        clientService.save(client);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 
 
     }

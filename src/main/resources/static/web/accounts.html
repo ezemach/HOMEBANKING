@@ -33,6 +33,9 @@
                 <a class="nav-link" href="./cards.html">Cards</a>
               </li>
               <li class="nav-item">
+                <a class="nav-link" href="./payments.html">Pay Loans</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="./transfers.html">Transfers</a>
               </li>
               <li class="nav-item">
@@ -68,7 +71,7 @@
 
                     </div>
                     <div class="col-xs-4">
-                      <h3>$ {{account.balance.toLocaleString('en-US')}}</h3>
+                      <h3>$ {{account.balance.toFixed(2)}}</h3>
                       <p>Balance</p>
                     </div>
                     <div class="col-xs-4">
@@ -104,15 +107,15 @@
         </template>
         <div v-if="selectAccount" class="d-flex mb-2 align-content-center flex-column">
           <label class="fs-4 gap-1" for=""> select the account to create:</label>
-          <form action="" @submit.prevent="newAccount">
-            <select v-model="type" class="form-select" type="text" placeholder="Type Card" required>
+          <form action="" @submit.prevent="newAccount" class="d-flex flex-column align-items-center">
+            <select v-model="type" class="form-select" style="width: 400px;" type="text" required>
 
               <option value="SAVING" class="button-perspective" 
                 >Saving Account</option>
               <option value="CURRENT" class="button-perspective"
                 >Current Account</option>
             </select>
-            <button type="submit">CREATE</button>
+            <button class="button-perspective mt-4 mb-5" type="submit">Create Account</button>
           </form>
         </div>
 
@@ -136,7 +139,7 @@
                 <tbody>
                   <tr v-for="loan of prestamos">
                     <td># {{loan.id}}</td>
-                    <td>$ {{loan.amount.toLocaleString('en-US')}}</td>
+                    <td>$ {{loan.amount.toFixed(2)}}</td>
                     <td>{{loan.name}}</td>
                     <td>{{loan.payments}}</td>
                   </tr>
@@ -160,6 +163,7 @@
         <button type="button" class="container-fluid button-perspective mt-5 mb-5"
           onclick="window.location.replace('./loan-application.html')">APPLY A NEW LOAN?</button>
       </div>
+      
     </main>
 
 

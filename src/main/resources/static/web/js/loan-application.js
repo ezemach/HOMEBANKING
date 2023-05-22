@@ -128,8 +128,8 @@ createApp({
               html: `
                   <p>Loan selected: ${this.data[this.idLoan - 1].name}</p>
                   <p>Payments: ${this.payments}</p>
-                  <p>Amount to pay: ${this.amount * this.data[this.idLoan - 1].interests}</p>
-                  <p>Account to transver: ${this.numberAccount}</p>
+                  <p>Amount to pay: ${parseFloat(this.amount * this.data[this.idLoan - 1].interests) + parseFloat(this.amount)}</p>
+                  <p>Account to transfer: ${this.numberAccount}</p>
               `,
               showCancelButton: true,
               confirmButtonText: 'Confirm',
