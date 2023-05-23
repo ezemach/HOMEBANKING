@@ -36,9 +36,7 @@ createApp({
           return paymentAmount.toFixed(2);
         },
         getCurrentPayment(payments) {
-          const totalPayments = 12;
-          const currentPayment = payments + 1;
-          return `${currentPayment}/${totalPayments}`;
+          return payments > 0 ? 1 : 0;
         },
         
         newPayment() {
@@ -90,8 +88,8 @@ createApp({
               title: 'Do You Confirm a Pay Your Loan?',
               html: `
                   <p>Amount Payment: ${(this.payments)}</p>
-                  <p>Account: ${(this.numberAccount) (selectedAccount.balance.toFixed(2))}</p>
-                  <p>Account Balance: $${selectedAccount.balance.toFixed(2)}</p>
+                  <p>Account to descont: ${(this.numberAccount)}</p>
+                  <p>Accounts Balance: $${selectedAccount.balance.toFixed(2)}</p>
                   
                   
               `,
