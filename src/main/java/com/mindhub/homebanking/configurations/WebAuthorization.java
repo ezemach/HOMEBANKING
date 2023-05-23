@@ -8,19 +8,21 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
+@CrossOrigin
 @EnableWebSecurity
 @Configuration
-public class  WebAuthorization {
-
+public class WebAuthorization {
     @Bean
-    protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+    protected SecurityFilterChain filterchain(HttpSecurity http) throws Exception {
+        //Cross-Origin Resource Sharing
+        http.cors().and().authorizeRequests()
                 .antMatchers("/web/index.html", "/web/js/**", "/web/css/**", "/web/img/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login", "/api/logout", "/api/clients").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/clients/current/cards", "/api/clients/current/accounts", "/api/clients/current/transactions","api/loans/create","api/loans/payments").hasAnyAuthority("CLIENT", "ADMIN")

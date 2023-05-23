@@ -13,6 +13,8 @@ public interface CardService {
 
     Card findById(Long id);
 
+    Card findByNumber (String number);
+
     void save(Card card);
 
     List<CardDTO> getCurrentCard(Authentication authentication);

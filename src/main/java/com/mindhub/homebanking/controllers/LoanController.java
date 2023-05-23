@@ -169,12 +169,12 @@ public class LoanController {
         // Restar del monto 1 cuota
         double newAmount = clientLoan.getAmount() - montoCuota;
         // Restar 1 al número de cuotas pendientes
-        int newPayments = clientLoan.getPayments() - 1;
+        int newPayments = clientLoan.getPayments() - (clientLoan.getPayments() - 1);
 
 
 
         //Nueva instancia de Transaction
-        Transaction paymentTransaction = new Transaction(TransactionType.DEBIT,montoCuota,"Payment " + newPayments +"/"+clientLoan.getPayments() +" "+ clientLoan.getName()+" Loan",LocalDateTime.now(),account.getBalance() - montoCuota);
+        Transaction paymentTransaction = new Transaction(TransactionType.DEBIT,montoCuota," " + newPayments +"/"+clientLoan.getPayments() +" "+ clientLoan.getName()+" Loan",LocalDateTime.now(),account.getBalance() - montoCuota);
         transactionService.saveTransaction(paymentTransaction);
 
         // Actualiza el préstamo con los nuevos valores
