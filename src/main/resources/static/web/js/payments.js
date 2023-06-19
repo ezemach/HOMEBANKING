@@ -90,8 +90,6 @@ createApp({
                   <p>Amount Payment: ${(this.payments)}</p>
                   <p>Account to descont: ${(this.numberAccount)}</p>
                   <p>Accounts Balance: $${selectedAccount.balance.toFixed(2)}</p>
-                  
-                  
               `,
               showCancelButton: true,
               confirmButtonText: 'Confirm',

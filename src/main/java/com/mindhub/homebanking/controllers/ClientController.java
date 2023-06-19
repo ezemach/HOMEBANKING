@@ -31,6 +31,9 @@ public class ClientController {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     @RequestMapping("/api/clients")
     public List<ClientDTO> getClients() {
@@ -45,8 +48,7 @@ public class ClientController {
         return clientService.getClientDTO(id);
         }
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+
     @RequestMapping(path = "/api/clients", method = RequestMethod.POST)
     public ResponseEntity <Object> register(
             @RequestParam String firstName, @RequestParam String lastName,

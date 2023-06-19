@@ -55,7 +55,7 @@
                     <div class="row justify-content-center">
                     </div>
                     <div class="row justify-content-center">
-                        <div class="col-sm-8  col-xs-12 col-md-8 col-lg-4">
+                        <div class="">
                             <div class="login-wrap p-0">
                                 <h3 class="mb-4 text-center">Transfer</h3>
 
@@ -67,17 +67,17 @@
 
                                           <select class="select-css"  name="own_account" id="own_account" v-model="ownAccount" required>
                                            <template v-for="account of data.accounts">
-                                            <option  :value="account.number">{{account.number}}</option>
+                                            <option v-if="account.active" :value="account.number">{{account.number}}</option>
                                         </template>
                                           </select>
                             
                                       </div>
                                       
-                                      <div id="">
-                                       <label  class="fs-4 gap-1" for="">  select the account to transfer:</label>
-                                       <div class="d-flex gap-3 mb-4">
-                                        <button @click="ownAcc" class="button-perspective" role="button">Own Account</button>
-                                        <button @click="forAcc"class="button-perspective" role="button">Foreign Account</button>
+                                      <div class="d-flex flex-column align-items-center">
+                                       <label  class="fs-4" for="">  select the account to transfer:</label>
+                                       <div class="d-flex justify-content-center mb-4 gap-3">
+                                        <button @click="ownAcc" class="button-perspective" role="button" style="width: 35%;" >Own Account</button>
+                                        <button @click="forAcc"class="button-perspective" role="button" style="width: 35%;">Foreign Account</button>
                                        </div>
                                       </div>
 
@@ -85,7 +85,7 @@
                                         <label  class="fs-4 gap-1" for="">  select the account:</label>
                                         <select class="select-css"name="destination_account" id="destination_account" v-model="externAccount" required>
                                          <template v-for="account of data.accounts">
-                                          <option :value="account.number">{{account.number}}</option>
+                                          <option v-if="account.active" :value="account.number">{{account.number}}</option>
                                          </template>
                                         </select>
                                       </div>
@@ -100,17 +100,17 @@
                                       
                                     <div class="form-group">
                                         <label  class="fs-4 gap-1" for="">  amount:</label>
-                                        <input type="text" class="form-control mb-3" placeholder="amount" v-model="amount"
-                                            required>
+                                        <input type="text" class="form-control mb-3 container-fluid" placeholder="amount" v-model="amount"
+                                        style="width: 400px;" required>
                                     </div>
                                     <div class="form-group">
                                         <label  class="fs-4 gap-1" for="">  Description:</label>
-                                        <input type="text" class="form-control mb-3" placeholder="Description"
-                                            v-model="description" required>
+                                        <input type="text" class="form-control mb-3 container-fluid" placeholder="Description"
+                                            v-model="description"  style="width: 400px;" required>
                                     </div>
-                                    <div class="form-group mt-4">
-                                        <button type="submit"class="button-perspective mt-3"
-                                            @click.prevent="newTransfer">Transfer</button>
+                                    <div class="form-group mt-5">
+                                        <button type="submit"class="button-perspective mt-3 container-fluid"
+                                            @click.prevent="newTransfer"  style="width: 400px;">Transfer</button>
                                     </div>
 
                                 </form>

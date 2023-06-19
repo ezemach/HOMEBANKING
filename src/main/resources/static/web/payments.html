@@ -84,7 +84,7 @@
                                     <select class="select-css" name="numberAccount" id="numberAccount"
                                         v-model="numberAccount" required>
                                         <template v-for="account of accounts">
-                                            <option :value="account.number">Account: {{account.number}}- ${{account.balance.toFixed(2)}}</option>
+                                            <option v-if="account.active" :value="account.number">Account: {{account.number}}- ${{account.balance.toFixed(2)}}</option>
                                         </template>
                                     </select>
 

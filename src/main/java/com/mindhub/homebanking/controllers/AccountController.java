@@ -32,9 +32,25 @@ public class AccountController {
     public List<AccountDTO> getAccount() {
         return accountService.getAccount();
     }
+
+
     @RequestMapping("/api/accounts/{id}")
-    public AccountDTO getAccount(@PathVariable Long id){
-        return accountService.getAccount(id);
+    public  ResponseEntity<Object> getAccount(Authentication authentication,@PathVariable Long id){
+        Client client = clientService.findByEmail(authentication.getName());
+        Account account = accountService.findById(id);
+        if(account == null){
+            return new ResponseEntity<>("Account doesn´t exist", HttpStatus.FORBIDDEN);
+        }
+        if (client.getAccounts().stream().noneMatch(account1 -> account1.getId() == account.getId())){
+            return new ResponseEntity<>("Account is not yours", HttpStatus.FORBIDDEN);
+        }
+        AccountDTO accountDTO = new AccountDTO(account);
+        return new ResponseEntity<>( accountDTO,
+                HttpStatus.OK);
+//        return accountService.getAccount(id);
+
+
+
     }
 
     @RequestMapping(path = "/api/clients/current/accounts", method = RequestMethod.POST)

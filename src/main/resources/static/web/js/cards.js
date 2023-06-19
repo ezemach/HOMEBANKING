@@ -40,26 +40,7 @@ const app = createApp({
         .then(() => window.location.href = "./cards.html")
         .catch(error => console.log(error)))
         .catch(error => { Swal.fire({ icon: 'error', text: error.response.data, }) }) } }) },
-        // deleteCard(id) {
-        //     axios.put(`/api/cards/${id}`)
-        //         .then(
-        //             response => {
-
-        //                 // window.location.replace('./cards.html')
-        //             }).catch(err => console.log(err))
-        // },
-        // confirmDeleteCard(id) {
-        //     Swal.fire({
-        //         title: 'Do You Confirm delete your card?',
-        //         showCancelButton: true,
-        //         confirmButtonText: 'Confirm',
-        //         cancelButtonText: 'Cancel'
-        //     }).then((result) => {
-        //         if (result.isConfirmed) {
-        //           this.deleteCard(id)
-        //         }
-        //     })
-        // }, 
+        
         isCardExpired(date) {
             const today = new Date();
             const expirationDate = new Date(date);
