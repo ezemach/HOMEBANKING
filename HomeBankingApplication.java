@@ -44,7 +44,7 @@ public class HomeBankingApplication {
 			client2.addAccount(account4);
 
 			Transaction transaction1 = new Transaction(TransactionType.DEBIT, 110.20, "Debito Tarjeta credito", LocalDateTime.now());
-			Transaction transaction2 = new Transaction(TransactionType.CREDIT, 800.50, "Credito Prestamo", LocalDateTime.now());;
+			Transaction transaction2 = new Transaction(TransactionType.CREDIT, 8000.50, "Credito Prestamo", LocalDateTime.now());;
 			Transaction transaction3 = new Transaction(TransactionType.DEBIT, 550.10, "Debito personal", LocalDateTime.now());
 			Transaction transaction4 = new Transaction(TransactionType.CREDIT, 90.00, "credito estatal", LocalDateTime.now());;
 			Transaction transaction5 = new Transaction(TransactionType.DEBIT, 10.20, "Debito Servicio", LocalDateTime.now());;
