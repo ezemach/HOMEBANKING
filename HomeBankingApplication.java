@@ -56,7 +56,7 @@ public class HomeBankingApplication {
 
 			Loan loanHipotecario = new Loan ("Hipotecario",600000, List.of(12,24,36,48,60));
 			Loan loanPersonal = new Loan ("Personal",150000, Arrays.asList(6,12,24));
-			Loan loanAutomotriz = new Loan ("Automotriz",350000, Arrays.asList(6,12,24,36));
+			Loan loanAutomotriz = new Loan ("Automotriz",390000, Arrays.asList(6,12,24,36));
 
 			ClientLoan loan1 = new ClientLoan(400000,60,"Hipotecario" );
 			ClientLoan loan2 = new ClientLoan(50000,12,"Personal" );
