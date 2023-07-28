@@ -59,7 +59,7 @@ public class HomeBankingApplication {
 			Loan loanAutomotriz = new Loan ("Automotriz",300000, Arrays.asList(6,12,24,36), 6.5);
 
 			ClientLoan loan1 = new ClientLoan(680000,60,"Hipotecario" );
-			ClientLoan loan2 = new ClientLoan(580000,12,"Personal" );
+			ClientLoan loan2 = new ClientLoan(520000,12,"Personal" );
 			ClientLoan loan3 = new ClientLoan(250000,24,"Personal");
 			ClientLoan loan4 = new ClientLoan(320000,36, "Automotriz");
 
