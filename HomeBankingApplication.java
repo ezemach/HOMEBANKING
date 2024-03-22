@@ -60,7 +60,7 @@ public class HomeBankingApplication {
 
 			ClientLoan loan1 = new ClientLoan(470000,60,"Hipotecario" );
 			ClientLoan loan2 = new ClientLoan(600000,12,"Personal" );
-			ClientLoan loan3 = new ClientLoan(220000,24,"Personal");
+			ClientLoan loan3 = new ClientLoan(240000,24,"Personal");
 			ClientLoan loan4 = new ClientLoan(300000,36, "Automotriz");
 
 			client1.addClientLoan(loan1);
